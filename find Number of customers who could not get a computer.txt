@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+int func(int n , string str){
+    char seen[26]={0};//26 because their are total of 26 alphabets . 
+    /*Here if seen[i] =0 means that the person is not in the cafe , if
+    seen[i] = 1 means that the person is in the cafe but not yet received a computer , if 
+    seen[i] = 2 means that the person is using a computer . */
+    int res = 0;//stores the number of customers not served . 
+    int occupied = 0;//stores the number of computers occupied . 
+    for(int i=0 ; i<str.length();i++){
+        int index = str[i]-'A';//index will point us to the index of the character in the seen array . 
+        if(seen[index]==0){ // means if the character is just entering the cafe . 
+            seen[index]=1; // since it has now entered the cafe we are changing the value . 
+            if(occupied<n){ // if some computers are available . 
+                occupied++; // one computer will now be occupied and the character value is set to 2 .
+                seen[index]=2;
+            }
+            else res++;// if no computer is available then the customer leaves without being served . 
+        }
+        else{
+            if(seen[index]==2) occupied--;
+            seen[index]=0;
+        }
+    }
+    return res;
+    
+}
+int main()
+{
+    int n;//Intialising n . 
+    cout<<"Enter the number of computers in the cafe : ";
+    cin>>n;
+    cout<<endl;
+    string seq;// Intialising seq . 
+    cout<<"Enter  the sequence : ";
+    cin>>seq;
+    cout<<endl;
+    int result = func(n,seq);//Function call .
+    cout<<"Number of customers who left without being served = "<<result<<endl;
+    return 0;
+}
